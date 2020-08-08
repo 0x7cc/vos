@@ -129,13 +129,18 @@
   %define argv1 elf64_fastcall_argv1
   %define argv2 elf64_fastcall_argv2
   %define argv3 elf64_fastcall_argv3
+%elifidn __OUTPUT_FORMAT__, macho64
+  %define argv0 elf64_fastcall_argv0
+  %define argv1 elf64_fastcall_argv1
+  %define argv2 elf64_fastcall_argv2
+  %define argv3 elf64_fastcall_argv3
 %elifidn __OUTPUT_FORMAT__, win64
   %define argv0 win64_fastcall_argv0
   %define argv1 win64_fastcall_argv1
   %define argv2 win64_fastcall_argv2
   %define argv3 win64_fastcall_argv3
 %else
-  %error "目前只支持elf64格式的fastcall"
+  %error "目前只支持x86_64架构"
 %endif
 
 %endif ; VOS_DEFS
