@@ -51,6 +51,25 @@
 %define SEG_CODE_XRC     (0x0E << 40) ; Execute/Read, conforming
 %define SEG_CODE_XRCA    (0x0F << 40) ; Execute/Read, conforming, accessed
 
+; See : EFLAGS Register
+%define EFLAGS_CF      (1 <<  0)   ; Carry Flag
+%define EFLAGS_PF      (1 <<  2)   ; Parity Flag
+%define EFLAGS_AF      (1 <<  4)   ; Auxiliary Carry Flag
+%define EFLAGS_ZF      (1 <<  6)   ; Zero Flag
+%define EFLAGS_SF      (1 <<  7)   ; Sign Flag
+%define EFLAGS_TF      (1 <<  8)   ; Trap Flag
+%define EFLAGS_IF      (1 <<  9)   ; Interrupt Enable Flag
+%define EFLAGS_DF      (1 << 10)   ; Direction Flag
+%define EFLAGS_OF      (1 << 11)   ; Overflow Flag
+%define EFLAGS_IOPL    (1 << 12)   ; I/O Privilege Level, 2 bits
+%define EFLAGS_NT      (1 << 14)   ; Nested Task
+%define EFLAGS_RF      (1 << 16)   ; Resume Flag
+%define EFLAGS_VM      (1 << 17)   ; Virtual-8086 Mode
+%define EFLAGS_AC      (1 << 18)   ; Alignment Check
+%define EFLAGS_VIF     (1 << 19)   ; Virtual Interrupt Flag
+%define EFLAGS_VIP     (1 << 20)   ; Virtual Interrupt Pending
+%define EFLAGS_ID      (1 << 21)   ; ID Flag
+
 ; See : CONTROL REGISTERS
 %define CR0_PE         (1 <<  0)   ; Protection Enable (bit 0 of CR0)
 %define CR0_MP         (1 <<  1)   ; Monitor Coprocessor (bit 1 of CR0)
