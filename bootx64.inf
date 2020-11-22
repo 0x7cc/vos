@@ -1,0 +1,33 @@
+
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = bootx64
+  FILE_GUID                      = 6987936E-f301-4a63-9661-fc6030dcc833
+  MODULE_TYPE                    = UEFI_APPLICATION
+  VERSION_STRING                 = 1.0
+  ENTRY_POINT                    = UefiMain
+
+[Sources]
+  bootx64.c
+  npt.c
+  svm.c
+  ept.c
+  vmx.c
+
+[Sources.X64]
+  svm.nasm
+  vmx.nasm
+
+[Packages]
+  MdePkg/MdePkg.dec
+
+[LibraryClasses]
+  UefiApplicationEntryPoint
+  UefiLib
+
+[Protocols]
+  gEfiGraphicsOutputProtocolGuid
+
+[Guids]
+
+

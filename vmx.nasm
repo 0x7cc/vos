@@ -1,0 +1,5 @@
+
+global nasm:
+nasm:
+  ret
+
