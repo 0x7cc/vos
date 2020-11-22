@@ -2,8 +2,8 @@
 // Created by xxx on 2020/11/22.
 //
 
-#ifndef BOOTX64__PAGE_H
-#define BOOTX64__PAGE_H
+#ifndef VOS_PAGE_H
+#define VOS_PAGE_H
 
 #include <stdint.h>
 
@@ -22,4 +22,4 @@
 #define make_1GB_PDE_item make_1GB_PML4E_item
 #define make_1GB_PTE_item make_1GB_PML4E_item
 
-#endif //BOOTX64__PAGE_H
+#endif //VOS_PAGE_H

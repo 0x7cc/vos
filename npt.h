@@ -2,7 +2,7 @@
 // Created by xxx on 2020/11/22.
 //
 
-#ifndef BOOTX64__NPT_H
-#define BOOTX64__NPT_H
+#ifndef VOS_NPT_H
+#define VOS_NPT_H
 
-#endif //BOOTX64__NPT_H
+#endif //VOS_NPT_H

@@ -2,8 +2,8 @@
 // Created by xxx on 2020/11/22.
 //
 
-#ifndef BOOTX64__EPT_H
-#define BOOTX64__EPT_H
+#ifndef VOS_EPT_H
+#define VOS_EPT_H
 
 // 4K page
 
@@ -26,4 +26,4 @@
 #define make_EPT_1GB_PDE_item make_EPT_1GB_PML4E_item
 #define make_EPT_1GB_PTE_item make_EPT_1GB_PML4E_item
 
-#endif //BOOTX64__EPT_H
+#endif //VOS_EPT_H
