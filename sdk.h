@@ -5,6 +5,8 @@
 #ifndef VOS_SDK_H
 #define VOS_SDK_H
 
+#include "vos.h"
+
 #define VOS_CMD_HOOK_PAGE_VA 348984539
 #define VOS_CMD_HOOK_PAGE_PA 228791391
 
@@ -20,6 +22,6 @@ typedef struct
   void* dst_PA;
 } vos_hook_page_pa_t;
 
-int vos_sdk_call (int cmd, const void* arg);
+vint vos_sdk_call (vint cmd, const void* arg);
 
 #endif //VOS_SDK_H
