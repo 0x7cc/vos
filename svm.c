@@ -3,3 +3,6 @@
 //
 
 #include "svm.h"
+
+void svm_vmexit_handler (SvmVMExitContext* ctx) {
+}

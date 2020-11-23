@@ -13,15 +13,17 @@
   svm.c
   ept.c
   vmx.c
+  vos.c
 
 [Sources.X64]
   x86_64.nasm
 
 [Sources.AArch64]
-  aarch64.nasm
+  aarch64.S
 
 [Packages]
   MdePkg/MdePkg.dec
+  StdLib/StdLib.dec
 
 [LibraryClasses]
   UefiApplicationEntryPoint
