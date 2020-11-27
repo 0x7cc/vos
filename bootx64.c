@@ -165,53 +165,68 @@ EFI_STATUS EFIAPI UefiMain (IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE* Syst
     if (EFI_ERROR (status))
       Print (L"status:%018lx\n", status);
 
-    Print (L"Get EFI_MEMORY_DESCRIPTOR Structure:%018lx\n", MemMap);
+    Print (L"UEFI memory map:\n");
     for (int i = 0; i < MemMapSize / DescriptorSize; i++) {
-      int                    MemType = 0;
-      EFI_MEMORY_DESCRIPTOR* MMap    = (EFI_MEMORY_DESCRIPTOR*)((CHAR8*)MemMap + i * DescriptorSize);
+      EFI_MEMORY_DESCRIPTOR* MMap = (EFI_MEMORY_DESCRIPTOR*)((CHAR8*)MemMap + i * DescriptorSize);
       if (MMap->NumberOfPages == 0)
         continue;
-      Print (L"MemoryMap %4d %10d (%16lx<->%16lx) %016lx\n",
-             MMap->Type,
-             MMap->NumberOfPages,
-             MMap->PhysicalStart,
-             MMap->PhysicalStart + (MMap->NumberOfPages << 12),
-             MMap->Attribute);
+
+      const CHAR16* typestr = L"123";
       switch (MMap->Type) {
         case EfiReservedMemoryType:
+          typestr = L"EfiReservedMemoryType";
+          break;
         case EfiMemoryMappedIO:
+          typestr = L"EfiMemoryMappedIO";
+          break;
         case EfiMemoryMappedIOPortSpace:
+          typestr = L"EfiMemoryMappedIOPortSpace";
+          break;
         case EfiPalCode:
-          MemType = 2; //2:ROM or Reserved
+          typestr = L"EfiPalCode";
           break;
-
         case EfiUnusableMemory:
-          MemType = 5; //5:Unusable
+          typestr = L"EfiUnusableMemory";
           break;
-
         case EfiACPIReclaimMemory:
-          MemType = 3; //3:ACPI Reclaim Memory
+          typestr = L"EfiACPIReclaimMemory";
           break;
-
         case EfiLoaderCode:
+          typestr = L"EfiLoaderCode";
+          break;
         case EfiLoaderData:
+          typestr = L"EfiLoaderData";
+          break;
         case EfiBootServicesCode:
+          typestr = L"EfiBootServicesCode";
+          break;
         case EfiBootServicesData:
+          typestr = L"EfiBootServicesData";
+          break;
         case EfiRuntimeServicesCode:
+          typestr = L"EfiRuntimeServicesCode";
+          break;
         case EfiRuntimeServicesData:
+          typestr = L"EfiRuntimeServicesData";
+          break;
         case EfiConventionalMemory:
+          typestr = L"EfiConventionalMemory";
+          break;
         case EfiPersistentMemory:
-          MemType = 1; //1:RAM
+          typestr = L"EfiPersistentMemory";
           break;
-
         case EfiACPIMemoryNVS:
-          MemType = 4; //4:ACPI NVS Memory
+          typestr = L"EfiACPIMemoryNVS";
           break;
-
         default:
-          Print (L"Invalid UEFI Memory Type:%4d\n", MMap->Type, MemType);
-          continue;
+          typestr = L"Unknow";
+          break;
       }
+
+      Print (L"0x%016llx - 0x%016llx : %s\n",
+             MMap->PhysicalStart,
+             MMap->PhysicalStart + EFI_PAGES_TO_SIZE (MMap->NumberOfPages),
+             typestr);
     }
   }
 

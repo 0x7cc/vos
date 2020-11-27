@@ -620,6 +620,12 @@ typedef union {
 } VmxSecondaryProcessorBasedControls;
 static_assert (sizeof (VmxSecondaryProcessorBasedControls) == 4, "");
 
+typedef struct vmxcontext vmxcontext;
+
+int vmx_load (vmxcontext**);
+int vmx_unload (vmxcontext**);
+int vmx_luanch (vmxcontext*);
+
 typedef struct
 {
   vuint64 rax;

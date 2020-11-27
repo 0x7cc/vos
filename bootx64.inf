@@ -9,11 +9,13 @@
 
 [Sources]
   bootx64.c
+  ept.c
   npt.c
   svm.c
-  ept.c
+  vmclient.c
   vmx.c
   vos.c
+  vostd.c
 
 [Sources.X64]
   x86_64.nasm

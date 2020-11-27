@@ -9,12 +9,14 @@
 
 typedef struct
 {
-  vint32 eax;
-  vint32 ebx;
-  vint32 ecx;
-  vint32 edx;
+  vuint32 eax;
+  vuint32 ebx;
+  vuint32 ecx;
+  vuint32 edx;
 } cpuid_t;
 
-void __cpuid (vint64, cpuid_t*);
+static_assert(sizeof(cpuid_t) == 16, "");
+
+void vos_cpuid (vint64, cpuid_t*);
 
 #endif //VOS__X86_64_H

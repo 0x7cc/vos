@@ -308,6 +308,12 @@ typedef struct
 } VMCB, *PVMCB;
 static_assert (sizeof (VMCB) == 0x1000, "");
 
+typedef struct svmcontext svmcontext;
+
+int svm_load (svmcontext**);
+int svm_unload (svmcontext**);
+int svm_luanch (svmcontext*);
+
 typedef struct
 {
   vuint64 rax;
