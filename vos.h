@@ -5,24 +5,30 @@
 #ifndef VOS_VOS_H
 #define VOS_VOS_H
 
-#pragma warning(disable : 4201) // warning C4201: nonstandard extension used: nameless struct/union.
-#pragma warning(disable : 4210) // warning C4210: nonstandard extension used: function given file scope.
-#pragma warning(disable : 4391) // warning C4391: incorrect return type for intrinsic function.
-#pragma warning(disable : 4392) // warning C4392: incorrect number of arguments for intrinsic function.
-#pragma warning(disable : 4702) // warning C4702: unreachable code.
 
 // clang-format off
+
+#if defined(_MSC_VER)
+
+  #pragma warning(disable : 4201) // warning C4201: nonstandard extension used: nameless struct/union.
+  #pragma warning(disable : 4210) // warning C4210: nonstandard extension used: function given file scope.
+  #pragma warning(disable : 4391) // warning C4391: incorrect return type for intrinsic function.
+  #pragma warning(disable : 4392) // warning C4392: incorrect number of arguments for intrinsic function.
+  #pragma warning(disable : 4702) // warning C4702: unreachable code.
+
+#endif
 
 #if __cplusplus
 #else
 
-#  ifndef nullptr
-#    define nullptr ((void*)0)
-#  endif
+  #ifndef nullptr
+    #define nullptr ((void*)0)
+  #endif
 
-#  if !defined(_WIN32) || defined(__MINGW64__)
-#    define static_assert _Static_assert
-#  endif
+  #if !defined(_WIN32) || defined(__MINGW64__)
+    #define static_assert _Static_assert
+  #endif
+
 #endif
 
 typedef signed char        vint8;
