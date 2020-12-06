@@ -4,10 +4,13 @@
 
 #include "vmx.h"
 
+#include <Library/UefiLib.h>
+
 struct vmxcontext {
 };
 
 int vmx_load (vmxcontext** vmx) {
+  AsciiPrint ("vmx feature loaded.");
   return 0;
 }
 

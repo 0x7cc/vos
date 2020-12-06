@@ -11,7 +11,7 @@ void boot () {
   vmclient_load (&client);
 
   if (client == nullptr) {
-    AsciiPrint ("vmclient load failed.\n");
+    AsciiErrorPrint ("vmclient load failed.\n");
     goto err;
   }
 

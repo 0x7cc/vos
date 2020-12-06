@@ -11,6 +11,10 @@
 #include <Library/UefiLib.h>
 
 struct vmclient {
+  union {
+    vmxcontext* vmx;
+    svmcontext* svm;
+  };
 };
 
 void printbin (const char* bin, int len) {
@@ -20,12 +24,12 @@ void printbin (const char* bin, int len) {
   AsciiPrint ("\n");
 }
 
-int vmclient_load (vmclient** vm) {
+int vmclient_load (vmclient** client) {
 
   char vendor[16];
 
-  cpuid_t  c;
-  vos_cpuid (0, &c);
+  cpuid_t c;
+  __cpuid (0, &c);
   ((vuint32*)vendor)[0] = c.ebx;
   ((vuint32*)vendor)[1] = c.edx;
   ((vuint32*)vendor)[2] = c.ecx;
@@ -35,13 +39,24 @@ int vmclient_load (vmclient** vm) {
 
   if (AsciiStrnCmp (vendor, "GenuineIntel", 12) == 0) {
     AsciiPrint ("vmalloc\n");
-    *vm = vmalloc (0x2000);
+    vmclient* vmcli;
+    vmcli = vmalloc (0x2000);
+    vmx_load (&(vmcli->vmx));
+
+    *client = vmcli;
+
     return 0;
   }
 
   if (AsciiStrnCmp (vendor, "AuthenticAMD", 12) == 0) {
     AsciiPrint ("vmalloc\n");
-    *vm = vmalloc (0x2000);
+
+    vmclient* vmcli;
+    vmcli = vmalloc (0x2000);
+    svm_load (&(vmcli->svm));
+
+    *client = vmcli;
+
     return 0;
   }
 
