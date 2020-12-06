@@ -30,7 +30,7 @@
   %define argv2 win64_fastcall_argv2
   %define argv3 win64_fastcall_argv3
 %else
-  %error "目前只支持x86_64架构"
+  %error "Currently only supports x86_64 architecture"
 %endif
 
 

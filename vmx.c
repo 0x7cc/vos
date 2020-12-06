@@ -7,6 +7,7 @@
 #include <Library/UefiLib.h>
 
 struct vmxcontext {
+  vuint un;
 };
 
 int vmx_load (vmxcontext** vmx) {

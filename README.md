@@ -1,67 +1,85 @@
 
-# VOS UEFI
+# vos
 
-运行环境要求
+Supported Platforms
 
-  - AMD64
+  - AMD64|AArch64
 
-  - VT-x/AMD-v
+  - VT-x|AMD-v
 
-  - UEFI BIOS
+  - UEFI
 
-## BUILD
+## Build vos on Windows
 
-初次编译时，请使用本文指定链接中的版本进行编译，以防编译出现
+### Install required software
 
-### Ubuntu 16.04 LTS
-
-```
-http://mirrors.163.com/ubuntu-releases/16.04/
-```
-
-### UDK 2018
+### Setup edk2 on Windows 10
 
 ```
-https://github.com/tianocore/edk2/releases/tag/vUDK2018
+https://gist.github.com/0x7cc/9d56c5e19860e5770f0c02e56e880112
 ```
 
-#### Install required software from apt
+### Clone
+
+```shell
+cd edk2/
+git clone https://github.com/0x7cc/vos.git
+```
+
+### Build
+
+Setup edk2 environments variables
+
+```shell
+edksetup.bat
+```
+
+Build
+
+```shell
+build -p vos/vos.dsc -t VS2019 -a X64 -b DEBUG
+build -p vos/vos.dsc -t VS2019 -a X64 -b RELEASE
+```
+
+## Build vos on Ubuntu
+
+### Install required software from apt
 
 ```shell
 sudo apt-get install build-essential uuid-dev iasl git gcc-5 nasm python3-distutils
 ```
 
-#### OpenSSL
+### Setup edk2 on Ubuntu 16.04 LTS
 
 ```
-https://github.com/openssl/openssl/releases/tag/OpenSSL_1_1_0g
+To be continue...
 ```
 
-#### Build BaseTools
+### Clone
 
 ```shell
-make -C BaseTools
-. edksetup.sh
+cd edk2/
+git clone https://github.com/0x7cc/vos.git
 ```
 
-#### Setup build shell environment
+### Build
+
+Setup edk2 environments variables
 
 ```shell
-export EDK_TOOLS_PATH=`pwd`/BaseTools
-. edksetup.sh BaseTools
+. ./edksetup.sh
 ```
 
-#### Build EFI Applications
+Build
 
 ```shell
-build -p OvmfPkg/OvmfPkgX64.dsc -b DEBUG -a X64 -t GCC5
-build -p AppPkg/AppPkg.dsc -b DEBUG -a X64 -t GCC5
-build -p AppPkg/AppPkg.dsc -b RELEASE -a X64 -t GCC5
+build -p vos/vos.dsc -t GCC5 -a X64 -b DEBUG
+build -p vos/vos.dsc -t GCC5 -a X64 -b RELEASE
 ```
 
 ## Bootable USB Flash
 
 ```shell
-...
+To be continue...
 ```
 

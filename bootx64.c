@@ -38,7 +38,7 @@ EFI_STATUS EFIAPI UefiMain (IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE* Syst
       UINTN  pixelsize;
     } maxresolution = {0, 0};
 
-    for (int i = 0; i < graphics_output->Mode->MaxMode; i++) {
+    for (UINT32 i = 0; i < graphics_output->Mode->MaxMode; i++) {
       UINTN sizeofinfo;
       graphics_output->QueryMode (graphics_output, i, &sizeofinfo, &graphics_output_mode);
       Print (L"Mode:%02d,Version:%x,Format:%d,Horizontal:%d,Vertical:%d,ScanLine:%d\n",
@@ -160,7 +160,7 @@ EFI_STATUS EFIAPI UefiMain (IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE* Syst
     gBS->AllocatePool (EfiRuntimeServicesData, MemMapSize, (VOID**)&MemMap);
     Print (L"Get MemMapSize:%d,DescriptorSize:%d,count:%d\n", MemMapSize, DescriptorSize, MemMapSize / DescriptorSize);
     gBS->SetMem ((void*)MemMap, MemMapSize, 0);
-    EFI_STATUS status = gBS->GetMemoryMap (&MemMapSize, MemMap, &MapKey, &DescriptorSize, &DesVersion);
+    status = gBS->GetMemoryMap (&MemMapSize, MemMap, &MapKey, &DescriptorSize, &DesVersion);
     Print (L"Get MemMapSize:%d,DescriptorSize:%d,count:%d\n", MemMapSize, DescriptorSize, MemMapSize / DescriptorSize);
     if (EFI_ERROR (status))
       Print (L"status:%018lx\n", status);

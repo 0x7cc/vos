@@ -25,7 +25,6 @@
 
 [Packages]
   MdePkg/MdePkg.dec
-  StdLib/StdLib.dec
 
 [LibraryClasses]
   UefiApplicationEntryPoint

@@ -208,7 +208,7 @@ endstruc
 ; void (uint64_t, struct cpuid_t*);
 __cpuid:
 
-  push rbx         ; 非易失性寄存器
+  push rbx         ; non-volatile registers.
 
   mov rax, argv0
 

@@ -86,7 +86,7 @@ __vos_svm_loop:
     call svm_vmexit_handler
 
     cmp rax, 0
-    jne .fail      ; 判断是否执行失败.
+    jne .fail      ;
 
     mov rbx, [rsp + SvmVMExitContext.vmcbptr]
     mov rax, [rsp + SvmVMExitContext.ax]

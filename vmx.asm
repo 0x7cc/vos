@@ -22,8 +22,3 @@ struc VmxVMExitContext
 .flags   resb 8
 endstruc
 
-
-global nasm:
-nasm:
-  ret
-

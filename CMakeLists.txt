@@ -2,6 +2,9 @@ cmake_minimum_required ( VERSION 3.1 )
 
 project ( vos )
 
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set ( CMAKE_C_STANDARD 99 )
+
 if (NOT DEFINED ENV{WORKSPACE})
   message (FATAL_ERROR "please run edksetup[.bat|.sh] before cmake")
 endif()
@@ -10,17 +13,25 @@ message ("$ENV{WORKSPACE}")
 
 add_library (
   bootx64
-  
+
   bootx64.c
   ept.c
+  ept.h
   npt.c
+  npt.h
+  page.h
+  sdk.h
   svm.c
+  svm.h
   vmclient.c
   vmclient.h
   vmx.c
+  vmx.h
   vos.c
+  vos.h
   vostd.c
   vostd.h
+  x86_64.h
 )
 
 target_compile_definitions ( bootx64 PUBLIC EFIAPI= STRING_ARRAY_NAME= USING_LTO= UEFI_C_SOURCE= )
@@ -64,3 +75,4 @@ target_include_directories ( bootx64
   $ENV{WORKSPACE}/MdePkg/Include/X64
   )
 
+message(WARNING "cmakelists.txt is just for the convenience of using the code hint function of the IDE, it cannot let you compile vos.")

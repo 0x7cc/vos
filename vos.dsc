@@ -22,7 +22,7 @@
   PLATFORM_GUID                  = 4d88937c-0821-4737-b4b5-4550264b13a8
   PLATFORM_VERSION               = 0.01
   DSC_SPECIFICATION              = 0x00010006
-  OUTPUT_DIRECTORY               = Build/vos
+  OUTPUT_DIRECTORY               = Build/vos/
   SUPPORTED_ARCHITECTURES        = X64|AARCH64
   BUILD_TARGETS                  = DEBUG|RELEASE
   SKUID_IDENTIFIER               = DEFAULT
@@ -86,5 +86,5 @@
 vos/vos.inf
 
 
-!include StdLib/StdLib.inc
+#!include StdLib/StdLib.inc
 
