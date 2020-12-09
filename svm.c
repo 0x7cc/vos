@@ -1,7 +1,3 @@
-//
-// Created by xxx on 2020/11/22.
-//
-
 #include "svm.h"
 #include "x86_64.h"
 
@@ -9,9 +5,9 @@
 
 // clang-format off
 #define CPUID_80000001_ECX_SVM   (1u << 2)
-#define CPUID_8000000A_EDX_NP    (1u << 0)        // Nested paging. Indicates support for nested paging. See “Nested Paging.”
-#define CPUID_8000000A_EDX_SVML  (1u << 2)        // SVM lock. Indicates support for SVM-Lock. See “Enabling SVM.”
-#define CPUID_8000000A_EDX_NRIP  (1u << 3)        // NRIP save. Indicates support for NRIP save on #VMEXIT. See “State Saved on Exit.”
+#define CPUID_8000000A_EDX_NP    (1u << 0)        // Nested paging. Indicates support for nested paging. See "Nested Paging."
+#define CPUID_8000000A_EDX_SVML  (1u << 2)        // SVM lock. Indicates support for SVM-Lock. See "Enabling SVM."
+#define CPUID_8000000A_EDX_NRIP  (1u << 3)        // NRIP save. Indicates support for NRIP save on #VMEXIT. See "State Saved on Exit."
 
 #define PAGE_SIZE                       4096
 #define MSR_VM_CR                       0xC0010114
