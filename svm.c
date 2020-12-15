@@ -33,20 +33,20 @@ int svm_load (svmcontext** ctx) {
 
   // See: 15.4 Enabling SVM
   {
-    __cpuid (0x80000001, &cpuid);
+    v_cpuid (0x80000001, &cpuid);
 
     if ((cpuid.ecx & CPUID_80000001_ECX_SVM) == 0) {
       AsciiErrorPrint ("CPUID_80000001_ECX_SVM\n");
       return -1;
     }
 
-    __cpuid (0x8000000A, &cpuid);
+    v_cpuid (0x8000000A, &cpuid);
     if ((cpuid.edx & CPUID_8000000A_EDX_NRIP) == 0) {
       AsciiErrorPrint ("CPUID_8000000A_EDX_NRIP\n");
       return -2;
     }
 
-    vuint64 vm_cr = __rdmsr (MSR_VM_CR);
+    vuint64 vm_cr = v_rdmsr (MSR_VM_CR);
     if (vm_cr & MSR_VM_CR_SVMDIS) {
       if ((cpuid.edx & CPUID_8000000A_EDX_SVML) == 0) {
         AsciiErrorPrint ("The user must change a platform firmware setting to enable SVM.\n");
@@ -59,7 +59,7 @@ int svm_load (svmcontext** ctx) {
 
   // See: 15.25.3 Enabling Nested Paging
   {
-    __cpuid (0x8000000A, &cpuid);
+    v_cpuid (0x8000000A, &cpuid);
     if ((cpuid.edx & CPUID_8000000A_EDX_NP) == 0) {
       AsciiErrorPrint ("CPUID_8000000A_EDX_NP.\n");
       return -1;

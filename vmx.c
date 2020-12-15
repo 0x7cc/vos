@@ -11,7 +11,7 @@ struct vmxcontext {
 };
 
 int vmx_load (vmxcontext** vmx) {
-  AsciiPrint ("vmx feature loaded.");
+  AsciiPrint ("vmx feature loaded.\n");
   return 0;
 }
 

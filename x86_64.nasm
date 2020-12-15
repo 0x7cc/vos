@@ -1,43 +1,43 @@
 %include "vmx.asm"
 %include "svm.asm"
 
-global __stosb
-global __stosw
-global __stosd
-global __stosq
-global __lar
-global __read_cr0
-global __write_cr0
-global __read_cr1
-global __write_cr1
-global __read_cr2
-global __write_cr2
-global __read_cr3
-global __write_cr3
-global __read_cr4
-global __write_cr4
-global __rdmsr
-global __wrmsr
-global __rflags
-global __eflags
-global __flags
-global __read_es
-global __read_cs
-global __read_ss
-global __read_ds
-global __read_fs
-global __read_gs
-global __read_tr
-global __sgdt
-global __sidt
-global __lgdt
-global __sldt
-global __lldt
-global __lidt
-global __cpuid
+global v_stosb
+global v_stosw
+global v_stosd
+global v_stosq
+global v_lar
+global v_read_cr0
+global v_write_cr0
+global v_read_cr1
+global v_write_cr1
+global v_read_cr2
+global v_write_cr2
+global v_read_cr3
+global v_write_cr3
+global v_read_cr4
+global v_write_cr4
+global v_rdmsr
+global v_wrmsr
+global v_rflags
+global v_eflags
+global v_flags
+global v_read_es
+global v_read_cs
+global v_read_ss
+global v_read_ds
+global v_read_fs
+global v_read_gs
+global v_read_tr
+global v_sgdt
+global v_sidt
+global v_lgdt
+global v_sldt
+global v_lldt
+global v_lidt
+global v_cpuid
 
 ; void (char* buffer, uint8 n, vos_uint len)
-__stosb:
+v_stosb:
   mov rdi, argv0
   mov rax, argv1
   mov rcx, argv2
@@ -45,7 +45,7 @@ __stosb:
   ret
 
 ; void (char* buffer, uint16 n, vos_uint len)
-__stosw:
+v_stosw:
   mov rdi, argv0
   mov rax, argv1
   mov rcx, argv2
@@ -53,7 +53,7 @@ __stosw:
   ret
 
 ; void (char* buffer, uint32 n, vos_uint len)
-__stosd:
+v_stosd:
   mov rdi, argv0
   mov rax, argv1
   mov rcx, argv2
@@ -61,7 +61,7 @@ __stosd:
   ret
 
 ; void (char* buffer, uint64 n, vos_uint len)
-__stosq:
+v_stosq:
   mov rdi, argv0
   mov rax, argv1
   mov rcx, argv2
@@ -69,63 +69,63 @@ __stosq:
   ret
 
 ; load access rights.
-__lar:
+v_lar:
   lar rax, argv0
   ret
 
-__read_cr0:
+v_read_cr0:
   mov rax, cr0
   ret
 
-__write_cr0:
+v_write_cr0:
   mov rax, argv0
   mov cr0, rax
   ret
 
-__read_cr1:
+v_read_cr1:
   mov rax, cr1
   ret
 
-__write_cr1:
+v_write_cr1:
   mov rax, argv0
   mov cr1, rax
   ret
 
-__read_cr2:
+v_read_cr2:
   mov rax, cr2
   ret
 
-__write_cr2:
+v_write_cr2:
   mov rax, argv0
   mov cr2, rax
   ret
 
-__read_cr3:
+v_read_cr3:
   mov rax, cr3
   ret
 
-__write_cr3:
+v_write_cr3:
   mov rax, argv0
   mov cr3, rax
   ret
 
-__read_cr4:
+v_read_cr4:
   mov rax, cr4
   ret
 
-__write_cr4:
+v_write_cr4:
   mov rax, argv0
   mov cr4, rax
   ret
 
-__rdmsr:
+v_rdmsr:
   mov rcx, argv0
   rdmsr
   shl rdx, 32
   or rax, rdx        ; merge to uint64
   ret
 
-__wrmsr:
+v_wrmsr:
   mov rcx, argv0
   mov rax, argv1     ; low part
   mov rdx, argv1
@@ -133,64 +133,64 @@ __wrmsr:
   wrmsr
   ret
 
-__rflags:
-__eflags:
-__flags:
+v_rflags:
+v_eflags:
+v_flags:
   pushfq
   pop rax
   ret
 
-__read_es:
+v_read_es:
   mov rax, es
   ret
 
-__read_cs:
+v_read_cs:
   mov rax, cs
   ret
 
-__read_ss:
+v_read_ss:
   mov rax, ss
   ret
 
-__read_ds:
+v_read_ds:
   mov rax, ds
   ret
 
-__read_fs:
+v_read_fs:
   mov rax, fs
   ret
 
-__read_gs:
+v_read_gs:
   mov rax, gs
   ret
 
-__read_tr:
+v_read_tr:
   push 0
   str [rsp]
   pop rax
   ret
 
-__sgdt:
+v_sgdt:
   sgdt [argv0]
   ret
 
-__sidt:
+v_sidt:
   sidt [argv0]
   ret
 
-__lgdt:
+v_lgdt:
   lgdt [argv0]
   ret
 
-__sldt:
+v_sldt:
   sldt [argv0]
   ret
 
-__lldt:
+v_lldt:
   lldt [argv0]
   ret
 
-__lidt:
+v_lidt:
   lidt [argv0]
   int 3
   ret
@@ -206,18 +206,19 @@ endstruc
 
 ; Table 3-8. Information Returned by CPUID Instruction
 ; void (uint64_t, struct cpuid_t*);
-__cpuid:
+v_cpuid:
 
   push rbx         ; non-volatile registers.
 
   mov rax, argv0
+  mov r10, argv1   ; volatile registers.
 
   cpuid
 
-  mov dword [argv1 + cpuid_t.eax], eax
-  mov dword [argv1 + cpuid_t.ebx], ebx
-  mov dword [argv1 + cpuid_t.ecx], ecx
-  mov dword [argv1 + cpuid_t.edx], edx
+  mov dword [r10 + cpuid_t.eax], eax
+  mov dword [r10 + cpuid_t.ebx], ebx
+  mov dword [r10 + cpuid_t.ecx], ecx
+  mov dword [r10 + cpuid_t.edx], edx
 
   pop rbx
 

@@ -29,16 +29,15 @@ int vmclient_load (vmclient** client) {
   char vendor[16];
 
   cpuid_t c;
-  __cpuid (0, &c);
+  v_cpuid (0, &c);
   ((vuint32*)vendor)[0] = c.ebx;
   ((vuint32*)vendor)[1] = c.edx;
   ((vuint32*)vendor)[2] = c.ecx;
   ((vuint32*)vendor)[3] = 0;
 
-  AsciiPrint ("%a 0x%016x\n", vendor, vendor);
+  AsciiPrint (vendor);
 
   if (AsciiStrnCmp (vendor, "GenuineIntel", 12) == 0) {
-    AsciiPrint ("vmalloc\n");
     vmclient* vmcli;
     vmcli = vmalloc (0x2000);
     vmx_load (&(vmcli->vmx));
@@ -49,8 +48,6 @@ int vmclient_load (vmclient** client) {
   }
 
   if (AsciiStrnCmp (vendor, "AuthenticAMD", 12) == 0) {
-    AsciiPrint ("vmalloc\n");
-
     vmclient* vmcli;
     vmcli = vmalloc (0x2000);
     svm_load (&(vmcli->svm));
