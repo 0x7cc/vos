@@ -12,9 +12,8 @@ endif()
 message ("$ENV{WORKSPACE}")
 
 add_library (
-  bootx64
+  vos
 
-  bootx64.c
   ept.c
   ept.h
   npt.c
@@ -34,9 +33,7 @@ add_library (
   x86_64.h
 )
 
-target_compile_definitions ( bootx64 PUBLIC EFIAPI= STRING_ARRAY_NAME= USING_LTO= UEFI_C_SOURCE= )
-
-target_include_directories ( bootx64
+target_include_directories ( vos
   PUBLIC
   $ENV{WORKSPACE}/Vlv2TbltDevicePkg/Include
   $ENV{WORKSPACE}/QuarkPlatformPkg/Include
@@ -71,8 +68,25 @@ target_include_directories ( bootx64
   $ENV{WORKSPACE}/IntelFsp2WrapperPkg/Include
   $ENV{WORKSPACE}/Nt32Pkg/Include
   $ENV{WORKSPACE}/Vlv2DeviceRefCodePkg/Include
+  $ENV{WORKSPACE}/MdePkg
   $ENV{WORKSPACE}/MdePkg/Include
   $ENV{WORKSPACE}/MdePkg/Include/X64
+  $ENV{WORKSPACE}/MdePkg/Test/UnitTest/Include
+  $ENV{WORKSPACE}/Build/vos/DEBUG_VS2019/X64/vos/vos/DEBUG
   )
+
+target_compile_options(vos PUBLIC /FIAutoGen.h )
+
+target_compile_definitions ( vos PUBLIC EFIAPI= STRING_ARRAY_NAME= USING_LTO= UEFI_C_SOURCE= )
+
+#############################################################################
+
+add_executable (
+  bootx64
+
+  bootx64.c
+)
+
+target_link_libraries(bootx64 PUBLIC vos)
 
 message(WARNING "cmakelists.txt is just for the convenience of using the code hint function of the IDE, it cannot let you compile vos.")
