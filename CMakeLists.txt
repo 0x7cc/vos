@@ -75,7 +75,7 @@ target_include_directories ( vos
   $ENV{WORKSPACE}/Build/vos/DEBUG_VS2019/X64/vos/vos/DEBUG
   )
 
-target_compile_options(vos PUBLIC /FIAutoGen.h )
+target_compile_options(vos PUBLIC /FIAutoGen.h /W4 /WX )
 
 target_compile_definitions ( vos PUBLIC EFIAPI= STRING_ARRAY_NAME= USING_LTO= UEFI_C_SOURCE= )
 
