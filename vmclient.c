@@ -9,12 +9,14 @@
 #include "svm.h"
 
 #include <Library/UefiLib.h>
+#include <Library/UefiBootServicesTableLib.h>
 
 struct vmclient {
   union {
     vmxcontext* vmx;
     svmcontext* svm;
   };
+  char vendor[16];
 };
 
 void printbin (const char* bin, int len) {
@@ -25,6 +27,7 @@ void printbin (const char* bin, int len) {
 }
 
 int vmclient_load (vmclient** client) {
+  int result = -1;
 
   char vendor[16];
 
@@ -35,29 +38,25 @@ int vmclient_load (vmclient** client) {
   ((vuint32*)vendor)[2] = c.ecx;
   ((vuint32*)vendor)[3] = 0;
 
-  AsciiPrint (vendor);
+  AsciiPrint ("%a\n", vendor);
+
+  vmclient* vmcli;
+  vmcli = vmalloc (0x2000);
+  gBS->SetMem (vmcli, 0x2000, 0);
+  gBS->CopyMem (vmcli->vendor, vendor, 12);
 
   if (AsciiStrnCmp (vendor, "GenuineIntel", 12) == 0) {
-    vmclient* vmcli;
-    vmcli = vmalloc (0x2000);
     vmx_load (&(vmcli->vmx));
-
-    *client = vmcli;
-
-    return 0;
-  }
-
-  if (AsciiStrnCmp (vendor, "AuthenticAMD", 12) == 0) {
-    vmclient* vmcli;
-    vmcli = vmalloc (0x2000);
+  } else if (AsciiStrnCmp (vendor, "AuthenticAMD", 12) == 0) {
     svm_load (&(vmcli->svm));
-
-    *client = vmcli;
-
-    return 0;
+  } else {
+    goto err;
   }
 
-  return -1;
+  *client = vmcli;
+  result  = 0;
+err:
+  return result;
 }
 
 int vmclient_unload (vmclient** vm) {
@@ -65,5 +64,13 @@ int vmclient_unload (vmclient** vm) {
 }
 
 int vmclient_luanch (vmclient* vm) {
+  if (AsciiStrnCmp (vm->vendor, "GenuineIntel", 12) == 0) {
+    vmx_luanch (vm->vmx);
+  }
+
+  if (AsciiStrnCmp (vm->vendor, "AuthenticAMD", 12) == 0) {
+    svm_luanch (vm->svm);
+  }
+
   return 0;
 }

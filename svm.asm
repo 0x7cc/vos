@@ -24,33 +24,33 @@ endstruc
 
 
 
-global __vos_svm_vmrun
-global __vos_svm_vmsave
-global __vos_svm_vmload
-global __vos_svm_vmmcall
-global __vos_svm_loop
+global v_svm_vmrun
+global v_svm_vmsave
+global v_svm_vmload
+global v_svm_vmmcall
+global v_svm_loop
 extern svm_vmexit_handler
 
-__vos_svm_vmrun:
+v_svm_vmrun:
   mov rax, argv0
   vmrun
   ret
 
-__vos_svm_vmsave:
+v_svm_vmsave:
   mov rax, argv0
   vmsave
   ret
 
-__vos_svm_vmload:
+v_svm_vmload:
   mov rax, argv0
   vmload
   ret
 
-__vos_svm_vmmcall:
+v_svm_vmmcall:
   vmmcall
   ret
 
-__vos_svm_loop:
+v_svm_loop:
   mov rsp, argv0
   .loop:
     mov rax, rsp

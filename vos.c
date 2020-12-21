@@ -15,6 +15,8 @@ void boot () {
     goto err;
   }
 
+  vmclient_luanch (client);
+
   AsciiPrint ("vmclient loaded.\n");
 
 err:

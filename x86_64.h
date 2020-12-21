@@ -17,10 +17,20 @@ typedef struct
 
 static_assert (sizeof (cpuid_t) == 16, "");
 
-void v_stosb (char* buffer, vuint8 n, vuint len);
-void v_stosw (char* buffer, vuint16 n, vuint len);
-void v_stosd (char* buffer, vuint32 n, vuint len);
-void v_stosq (char* buffer, vuint64 n, vuint len);
+#pragma pack(1)
+typedef struct gdtr__ {
+  vuint16 limit;
+  vuint64 base;
+} gdtr_t, ldtr_t, idtr_t;
+#pragma pack()
+
+static_assert (sizeof (gdtr_t) == 10, "");
+
+void  v_stosb (char* buffer, vuint8 n, vuint len);
+void  v_stosw (char* buffer, vuint16 n, vuint len);
+void  v_stosd (char* buffer, vuint32 n, vuint len);
+void  v_stosq (char* buffer, vuint64 n, vuint len);
+// load access rights
 vuint v_lar (vuint);
 vuint v_read_cr0 (void);
 void  v_write_cr0 (vuint);
@@ -44,12 +54,12 @@ vuint v_read_ds (void);
 vuint v_read_fs (void);
 vuint v_read_gs (void);
 vuint v_read_tr (void);
-vuint v_sgdt (void);
-vuint v_sldt (void);
-vuint v_sidt (void);
-void  v_lgdt (vuintptr);
-void  v_lldt (vuintptr);
-void  v_lidt (vuintptr);
+void  v_sgdt (gdtr_t*);
+void  v_sldt (ldtr_t*);
+void  v_sidt (idtr_t*);
+void  v_lgdt (const gdtr_t*);
+void  v_lldt (const ldtr_t*);
+void  v_lidt (const idtr_t*);
 void  v_cpuid (vint64, cpuid_t*);
 
 #endif //VOS__X86_64_H
